@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Room&Rest — Feels like home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f172a;          /* slate-900 */
+      --card:#111827;        /* gray-900 */
+      --muted:#94a3b8;       /* slate-400 */
+      --accent:#22d3ee;      /* cyan-400 */
+      --accent-2:#38bdf8;    /* sky-400 */
+      --text:#e5e7eb;        /* gray-200 */
+      --ring: rgba(34,211,238,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b1224, #0f172a 35%, #0b1224);color:var(--text)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{height:40px;width:40px;border-radius:12px;background:radial-gradient(120% 120% at 30% 30%, var(--accent), var(--accent-2));box-shadow:0 10px 30px rgba(56,189,248,.35)}
+    .brand h1{margin:0;font-size:1.25rem;letter-spacing:.3px}
+    .tag{padding:.25rem .6rem;border:1px solid rgba(148,163,184,.25);border-radius:999px;font-size:.8rem;color:var(--muted)}
+
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 0}
+    .hero h2{font-size:3rem;line-height:1.1;margin:.2rem 0 1rem}
+    .hero p{font-size:1.1rem;color:var(--muted);margin:0 0 1.5rem}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#04121a;border:none;padding:12px 18px;font-weight:700;border-radius:12px;cursor:pointer;box-shadow:0 8px 24px var(--ring)}
+    .btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(148,163,184,.25)}
+
+    .card{
+      background:rgba(17,24,39,.6);
+      backdrop-filter: blur(6px);
+      border:1px solid rgba(148,163,184,.15);
+      border-radius:16px;padding:20px
+    }
+    .hero .art{height:280px;border-radius:18px;background:
+      radial-gradient(120% 120% at 0% 0%, rgba(56,189,248,.25), transparent 55%),
+      radial-gradient(120% 120% at 100% 0%, rgba(34,211,238,.18), transparent 55%),
+      linear-gradient(180deg, rgba(2,6,23,.3), rgba(2,6,23,.6)),
+      url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+      box-shadow:0 20px 50px rgba(2,6,23,.6), inset 0 0 0 1px rgba(148,163,184,.12);
+    }
+
+    section{padding:12px 0 36px}
+    .section-title{font-size:1.75rem;margin:0 0 8px}
+    .section-sub{color:var(--muted);margin:0 0 22px}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .col-6{grid-column:span 6}
+    .col-12{grid-column:span 12}
+
+    .benefit h3{margin:.2rem 0 .6rem;font-size:1.2rem}
+    .benefit p{margin:0 0 .6rem;color:var(--muted)}
+    .kpi{display:flex;gap:8px;align-items:center;margin:.35rem 0}
+    .pill{font-weight:700;padding:.35rem .55rem;border-radius:10px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35);}
+
+    .list{margin:.4rem 0 0;padding-left:18px;color:var(--muted)}
+
+    footer{border-top:1px solid rgba(148,163,184,.15);margin-top:40px;padding:18px 0;color:var(--muted);font-size:.9rem}
+
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+      .hero .art{height:220px}
+      .col-6{grid-column:span 12}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Room&Rest</h1>
+      </div>
+      <span class="tag">Feels like home</span>
+    </header>
+
+    <section class="hero">
+      <div class="card">
+        <h2>Premium Furnished Rentals that <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">feel like home</span>.</h2>
+        <p>We sign 3‑year agreements with owners, guarantee monthly rent, and transform unfurnished flats into beautiful, maintenance‑free homes for reliable returns.</p>
+        <div class="cta">
+          <button class="btn">Talk to Us</button>
+          <button class="btn secondary">See a Sample Agreement</button>
+        </div>
+      </div>
+      <div class="art" role="img" aria-label="Cozy living room with premium furnishing"></div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Benefits for Owners</h2>
+      <p class="section-sub">Four reasons owners love partnering with Room&Rest.</p>
+      <div class="grid">
+        <div class="col-6">
+          <div class="card benefit">
+            <h3>1) Guaranteed Rent — No Vacancies</h3>
+            <p>Get fixed rent every month for 3 years—whether the flat is occupied or not.</p>
+            <div class="kpi"><span class="pill">Typical vacancy: 1–2 months/yr</span></div>
+            <ul class="list">
+              <li>Eliminates income loss from tenant churn and market slowdowns.</li>
+              <li>Predictable cash flow like an FD, but with higher yield.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card benefit">
+            <h3>2) Zero Brokerage Cost</h3>
+            <p>No agent commissions—ever. We source, screen and manage tenants end‑to‑end.</p>
+            <div class="kpi"><span class="pill">Brokerage: 0.5–1 month/yr</span></div>
+            <ul class="list">
+              <li>Saves ₹27.5K–₹55K annually on a ₹55K rent flat.</li>
+              <li>No recurring payouts to middlemen.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card benefit">
+            <h3>3) No Maintenance Hassle</h3>
+            <p>We handle wear & tear, repainting, plumbing, electricals, furniture/appliance fixes—at our cost.</p>
+            <div class="kpi"><span class="pill">Typical spend: ₹20K–₹40K/yr</span></div>
+            <ul class="list">
+              <li>Flat stays in top condition without owner intervention.</li>
+              <li>End‑of‑term handover in clean, rental‑ready shape.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card benefit">
+            <h3>4) Peace of Mind</h3>
+            <p>Truly passive income—no calls from brokers, no rent follow‑ups, no repair emergencies.</p>
+            <div class="kpi"><span class="pill">Hands‑off. Stress‑free.</span></div>
+            <ul class="list">
+              <li>We manage tenants, agreements, verifications, and society coordination.</li>
+              <li>You sign once and receive rent on the same date, every month.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container" style="padding:0">
+        © <span id="year"></span> Room&Rest • Feels like home
+      </div>
+    </footer>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
