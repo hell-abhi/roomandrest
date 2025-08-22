@@ -1,157 +1,793 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Room&Rest — Feels like home</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room&Rest</title>
   <style>
-    :root{
-      --bg:#0f172a;          /* slate-900 */
-      --card:#111827;        /* gray-900 */
-      --muted:#94a3b8;       /* slate-400 */
-      --accent:#22d3ee;      /* cyan-400 */
-      --accent-2:#38bdf8;    /* sky-400 */
-      --text:#e5e7eb;        /* gray-200 */
-      --ring: rgba(34,211,238,.35);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b1224, #0f172a 35%, #0b1224);color:var(--text)}
-    .container{max-width:1100px;margin:0 auto;padding:24px}
-    header{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{height:40px;width:40px;border-radius:12px;background:radial-gradient(120% 120% at 30% 30%, var(--accent), var(--accent-2));box-shadow:0 10px 30px rgba(56,189,248,.35)}
-    .brand h1{margin:0;font-size:1.25rem;letter-spacing:.3px}
-    .tag{padding:.25rem .6rem;border:1px solid rgba(148,163,184,.25);border-radius:999px;font-size:.8rem;color:var(--muted)}
-
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 0}
-    .hero h2{font-size:3rem;line-height:1.1;margin:.2rem 0 1rem}
-    .hero p{font-size:1.1rem;color:var(--muted);margin:0 0 1.5rem}
-    .cta{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#04121a;border:none;padding:12px 18px;font-weight:700;border-radius:12px;cursor:pointer;box-shadow:0 8px 24px var(--ring)}
-    .btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(148,163,184,.25)}
-
-    .card{
-      background:rgba(17,24,39,.6);
-      backdrop-filter: blur(6px);
-      border:1px solid rgba(148,163,184,.15);
-      border-radius:16px;padding:20px
-    }
-    .hero .art{height:280px;border-radius:18px;background:
-      radial-gradient(120% 120% at 0% 0%, rgba(56,189,248,.25), transparent 55%),
-      radial-gradient(120% 120% at 100% 0%, rgba(34,211,238,.18), transparent 55%),
-      linear-gradient(180deg, rgba(2,6,23,.3), rgba(2,6,23,.6)),
-      url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
-      box-shadow:0 20px 50px rgba(2,6,23,.6), inset 0 0 0 1px rgba(148,163,184,.12);
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: #333;
     }
 
-    section{padding:12px 0 36px}
-    .section-title{font-size:1.75rem;margin:0 0 8px}
-    .section-sub{color:var(--muted);margin:0 0 22px}
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
 
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-    .col-6{grid-column:span 6}
-    .col-12{grid-column:span 12}
+    /* Background Image Carousel */
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(1.05);
+      will-change: transform, opacity;
+      transition: opacity 2s ease-in-out;
+    }
 
-    .benefit h3{margin:.2rem 0 .6rem;font-size:1.2rem}
-    .benefit p{margin:0 0 .6rem;color:var(--muted)}
-    .kpi{display:flex;gap:8px;align-items:center;margin:.35rem 0}
-    .pill{font-weight:700;padding:.35rem .55rem;border-radius:10px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35);}
+    .hero-background.active {
+      opacity: 1;
+      animation: continuousPan 20s ease-in-out infinite;
+    }
 
-    .list{margin:.4rem 0 0;padding-left:18px;color:var(--muted)}
+    .hero-background.next-active {
+      opacity: 0;
+      animation: continuousPan 20s ease-in-out infinite;
+      animation-delay: -10s; /* Start halfway through the animation */
+    }
 
-    footer{border-top:1px solid rgba(148,163,184,.15);margin-top:40px;padding:18px 0;color:var(--muted);font-size:.9rem}
+    /* Enhanced continuous pan animation with more visible movement */
+    @keyframes continuousPan {
+      0% {
+        transform: scale(1.08) translateX(-2%) translateY(-1.5%);
+      }
+      14.28% {
+        transform: scale(1.06) translateX(-1%) translateY(-2%);
+      }
+      28.56% {
+        transform: scale(1.09) translateX(1%) translateY(-1%);
+      }
+      42.84% {
+        transform: scale(1.07) translateX(2%) translateY(0%);
+      }
+      57.12% {
+        transform: scale(1.08) translateX(1.5%) translateY(1.5%);
+      }
+      71.4% {
+        transform: scale(1.06) translateX(0%) translateY(2%);
+      }
+      85.68% {
+        transform: scale(1.09) translateX(-1.5%) translateY(1%);
+      }
+      100% {
+        transform: scale(1.08) translateX(-2%) translateY(-1.5%);
+      }
+    }
 
-    @media (max-width: 900px){
-      .hero{grid-template-columns:1fr}
-      .hero .art{height:220px}
-      .col-6{grid-column:span 12}
+    /* Dark overlay for better text readability */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin: 0;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 1.8rem;
+      margin-top: 15px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+      font-weight: 300;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Carousel indicators */
+    .carousel-indicators {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 3;
+    }
+
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    /* Button styling */
+    .hero-buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-buttons a, .hero-buttons button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 25px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    .whatsapp-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+
+    .email-btn {
+      background: linear-gradient(135deg, #0072c6, #005a9e);
+      color: white;
+    }
+
+    .email-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 114, 198, 0.4);
+    }
+
+    .calculate-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: white;
+    }
+
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    }
+
+    /* Section Common */
+    section {
+      padding: 60px 20px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(135deg, #ff6b6b, #ffa726);
+      border-radius: 2px;
+    }
+
+    /* Owners Section */
+    .owners-section {
+      background: linear-gradient(135deg, #fef6e4, #fff3d4);
+    }
+
+    /* Tenants Section */
+    .tenants-section {
+      background: linear-gradient(135deg, #e8f6f3, #d4f1ea);
+    }
+
+    /* Table Styling */
+    .benefits-table {
+      width: 90%;
+      margin: 0 auto 40px auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    .benefits-table th, .benefits-table td {
+      padding: 18px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    .benefits-table th {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      font-weight: bold;
+      color: #495057;
+    }
+    .benefits-table .summary td {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Benefits Grid */
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      width: 90%;
+      margin: 0 auto;
+    }
+    .benefit {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .benefit:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .benefit h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .benefit p {
+      color: #6c757d;
+      line-height: 1.6;
+    }
+
+    /* Popup Overlay Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .popup-overlay.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .popup-content {
+      background: white;
+      border-radius: 15px;
+      max-width: 90%;
+      max-height: 90%;
+      width: 90%;
+      height: 90%;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+
+    .popup-overlay.show .popup-content {
+      transform: scale(1);
+    }
+
+    .popup-header {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      position: relative;
+    }
+
+    .popup-title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .popup-close {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+
+    .popup-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .popup-body {
+      height: calc(100% - 80px);
+      overflow: auto;
+    }
+
+    .popup-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Gray out main content when popup is open */
+    body.popup-open .hero,
+    body.popup-open .owners-section,
+    body.popup-open .tenants-section {
+      filter: grayscale(0.5) brightness(0.7);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    /* Loading spinner */
+    .popup-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #ff6b6b;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1.4rem;
+      }
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero-buttons a, .hero-buttons button {
+        width: 200px;
+        justify-content: center;
+      }
+      
+      .popup-content {
+        width: 95%;
+        height: 85%;
+        max-width: none;
+        max-height: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <h1>Room&Rest</h1>
-      </div>
-      <span class="tag">Feels like home</span>
-    </header>
 
-    <section class="hero">
-      <div class="card">
-        <h2>Premium Furnished Rentals that <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">feel like home</span>.</h2>
-        <p>We sign 3‑year agreements with owners, guarantee monthly rent, and transform unfurnished flats into beautiful, maintenance‑free homes for reliable returns.</p>
-        <div class="cta">
-          <button class="btn">Talk to Us</button>
-          <button class="btn secondary">See a Sample Agreement</button>
-        </div>
-      </div>
-      <div class="art" role="img" aria-label="Cozy living room with premium furnishing"></div>
-    </section>
+  <!-- Hero -->
+  <section class="hero">
+    <!-- Background Images -->
+    <div class="hero-background active" style="background-image: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80');"></div>
+    <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80');"></div>
+    <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80');"></div>
+    <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80');"></div>
+    <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1595428774223-ef52624120d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80');"></div>
 
-    <section>
-      <h2 class="section-title">Benefits for Owners</h2>
-      <p class="section-sub">Four reasons owners love partnering with Room&Rest.</p>
-      <div class="grid">
-        <div class="col-6">
-          <div class="card benefit">
-            <h3>1) Guaranteed Rent — No Vacancies</h3>
-            <p>Get fixed rent every month for 3 years—whether the flat is occupied or not.</p>
-            <div class="kpi"><span class="pill">Typical vacancy: 1–2 months/yr</span></div>
-            <ul class="list">
-              <li>Eliminates income loss from tenant churn and market slowdowns.</li>
-              <li>Predictable cash flow like an FD, but with higher yield.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card benefit">
-            <h3>2) Zero Brokerage Cost</h3>
-            <p>No agent commissions—ever. We source, screen and manage tenants end‑to‑end.</p>
-            <div class="kpi"><span class="pill">Brokerage: 0.5–1 month/yr</span></div>
-            <ul class="list">
-              <li>Saves ₹27.5K–₹55K annually on a ₹55K rent flat.</li>
-              <li>No recurring payouts to middlemen.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card benefit">
-            <h3>3) No Maintenance Hassle</h3>
-            <p>We handle wear & tear, repainting, plumbing, electricals, furniture/appliance fixes—at our cost.</p>
-            <div class="kpi"><span class="pill">Typical spend: ₹20K–₹40K/yr</span></div>
-            <ul class="list">
-              <li>Flat stays in top condition without owner intervention.</li>
-              <li>End‑of‑term handover in clean, rental‑ready shape.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card benefit">
-            <h3>4) Peace of Mind</h3>
-            <p>Truly passive income—no calls from brokers, no rent follow‑ups, no repair emergencies.</p>
-            <div class="kpi"><span class="pill">Hands‑off. Stress‑free.</span></div>
-            <ul class="list">
-              <li>We manage tenants, agreements, verifications, and society coordination.</li>
-              <li>You sign once and receive rent on the same date, every month.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Content -->
+    <div class="hero-content">
+      <h1>Room&Rest</h1>
+      <p>Feels like home</p>
+      <div class="hero-buttons">
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/917903580340" target="_blank" class="whatsapp-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="20" height="20">
+          Chat with Us
+        </a>
 
-    <footer>
-      <div class="container" style="padding:0">
-        © <span id="year"></span> Room&Rest • Feels like home
+        <!-- Email Button -->
+        <a href="mailto:contact@roomandrest.com" class="email-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" alt="Email" width="20" height="20">
+          Send Email
+        </a>
+
+        <!-- Calculate Savings Button -->
+        <button onclick="openCalculatorPopup()" class="calculate-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 2V4H17V2H19V4H20C21.1 4 22 4.9 22 6V20C22 21.1 21.1 22 20 22H4C2.9 22 2 21.1 2 20V6C2 4.9 2.9 4 4 4H5V2H7ZM20 8H4V20H20V8Z" fill="currentColor"/>
+            <path d="M8 10H16V12H8V10ZM8 14H13V16H8V14Z" fill="currentColor"/>
+          </svg>
+          Calculate Savings
+        </button>
       </div>
-    </footer>
+    </div>
+
+    <!-- Carousel Indicators -->
+    <div class="carousel-indicators">
+      <div class="indicator active" data-slide="0"></div>
+      <div class="indicator" data-slide="1"></div>
+      <div class="indicator" data-slide="2"></div>
+      <div class="indicator" data-slide="3"></div>
+      <div class="indicator" data-slide="4"></div>
+    </div>
+  </section>
+
+  <!-- Owners Section -->
+  <section class="owners-section">
+    <h2 class="section-title">Benefits to Owners</h2>
+
+    <!-- Owners Table -->
+    <table class="benefits-table">
+      <tr>
+        <th>Expense</th>
+        <th>Traditional Renting</th>
+        <th>With Room&Rest</th>
+      </tr>
+      <tr>
+        <td>Vacancy Loss</td>
+        <td>₹1.1 – ₹2.2 lakh / year</td>
+        <td>₹0 (Guaranteed Rent)</td>
+      </tr>
+      <tr>
+        <td>Brokerage</td>
+        <td>₹25,000 – ₹60,000 / year</td>
+        <td>₹0</td>
+      </tr>
+      <tr>
+        <td>Maintenance (wear & tear, repairs, repainting)</td>
+        <td>₹40,000 – ₹80,000 / year</td>
+        <td>₹0</td>
+      </tr>
+      <tr>
+        <td>Peace of Mind</td>
+        <td>Low – manage brokers & tenants</td>
+        <td>High – truly passive income</td>
+      </tr>
+      <tr class="summary">
+        <td><strong>Total Benefits</strong></td>
+        <td>₹2 – ₹4 lakh saved (plus hassles)</td>
+        <td><strong>Guaranteed Rent + Zero Costs</strong></td>
+      </tr>
+    </table>
+
+    <!-- Owners Benefits Grid -->
+    <div class="benefits">
+      <div class="benefit">
+        <h3>Guaranteed Rent</h3>
+        <p>Get rent every month whether the flat is occupied or not.</p>
+      </div>
+      <div class="benefit">
+        <h3>No Brokerage</h3>
+        <p>Save 1 month rent every year by avoiding broker fees.</p>
+      </div>
+      <div class="benefit">
+        <h3>No Maintenance Costs</h3>
+        <p>Wear & tear, repairs, repainting all handled by us.</p>
+      </div>
+      <div class="benefit">
+        <h3>Truly Passive Income</h3>
+        <p>Sign once and relax—we handle everything else.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tenants Section -->
+  <section class="tenants-section">
+    <h2 class="section-title">Benefits to Tenants</h2>
+
+    <!-- Tenants Table -->
+    <table class="benefits-table">
+      <tr>
+        <th>Expense</th>
+        <th>Traditional Renting</th>
+        <th>With Room&Rest</th>
+      </tr>
+      <tr>
+        <td>Brokerage Cost</td>
+        <td>₹45,000 – ₹90,000</td>
+        <td>₹0</td>
+      </tr>
+      <tr>
+        <td>Furniture Setup</td>
+        <td>₹3 – ₹5 lakh</td>
+        <td>₹0 (Fully Furnished)</td>
+      </tr>
+      <tr>
+        <td>Maintenance Support</td>
+        <td>₹15,000 – ₹25,000 / year</td>
+        <td>₹0 (Handled by Host)</td>
+      </tr>
+      <tr>
+        <td>Peace of Mind</td>
+        <td>Low – deal with brokers & owners</td>
+        <td>High – hassle-free living</td>
+      </tr>
+      <tr class="summary">
+        <td><strong>Total Benefits</strong></td>
+        <td>₹3.6 – ₹6.1 lakh (plus hassles)</td>
+        <td><strong>All Inclusive with Rent</strong></td>
+      </tr>
+    </table>
+
+    <!-- Tenants Benefits Grid -->
+    <div class="benefits">
+      <div class="benefit">
+        <h3>Move-in Ready</h3>
+        <p>Fully furnished flats where you can start living from day 0.</p>
+      </div>
+      <div class="benefit">
+        <h3>Dedicated Host</h3>
+        <p>Your personal POC to solve any issue—plumbing, repairs, electricity, etc.</p>
+      </div>
+      <div class="benefit">
+        <h3>No Brokerage</h3>
+        <p>Save 1 month rent instantly with zero brokerage fees.</p>
+      </div>
+      <div class="benefit">
+        <h3>Hassle-Free Living</h3>
+        <p>No brokers, no owners—just enjoy peace of mind in your new home.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popup Overlay -->
+  <div class="popup-overlay" id="calculatorPopup">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h3 class="popup-title">Savings Calculator</h3>
+        <button class="popup-close" onclick="closeCalculatorPopup()" aria-label="Close">&times;</button>
+      </div>
+      <div class="popup-body">
+        <div class="popup-loading">
+          <div class="spinner"></div>
+          Loading calculator...
+        </div>
+        <iframe id="calculatorFrame" class="popup-iframe" style="display: none;"></iframe>
+      </div>
+    </div>
   </div>
+
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Image carousel functionality
+    let currentSlide = 0;
+    const backgrounds = document.querySelectorAll('.hero-background');
+    const indicators = document.querySelectorAll('.indicator');
+    const totalSlides = backgrounds.length;
+
+    function showSlide(index) {
+      // Remove all classes first
+      backgrounds.forEach(bg => {
+        bg.classList.remove('active', 'next-active');
+      });
+      indicators.forEach(ind => ind.classList.remove('active'));
+
+      // Set current slide as active
+      backgrounds[index].classList.add('active');
+      indicators[index].classList.add('active');
+      
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      const next = (currentSlide + 1) % totalSlides;
+      const currentBg = backgrounds[currentSlide];
+      const nextBg = backgrounds[next];
+      
+      // Start the next image animation and make it ready
+      nextBg.classList.add('next-active');
+      
+      // After a brief moment, fade in the next image while fading out current
+      setTimeout(() => {
+        currentBg.style.opacity = '0';
+        nextBg.style.opacity = '1';
+        nextBg.classList.remove('next-active');
+        nextBg.classList.add('active');
+        
+        // Clean up after transition
+        setTimeout(() => {
+          currentBg.classList.remove('active');
+          currentBg.style.opacity = '';
+          nextBg.style.opacity = '';
+        }, 2000);
+        
+      }, 100);
+      
+      // Update indicators
+      indicators[currentSlide].classList.remove('active');
+      indicators[next].classList.add('active');
+      
+      currentSlide = next;
+    }
+
+    // Auto-advance slides every 4 seconds
+    setInterval(nextSlide, 4000);
+
+    // Click handlers for indicators
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => showSlide(index));
+    });
+
+    // Pause auto-advance on hover
+    const hero = document.querySelector('.hero');
+    let autoAdvance = true;
+
+    hero.addEventListener('mouseenter', () => {
+      autoAdvance = false;
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      autoAdvance = true;
+    });
+
+    // Enhanced auto-advance with pause functionality
+    let intervalId = setInterval(() => {
+      if (autoAdvance) {
+        nextSlide();
+      }
+    }, 4000);
+
+    // Popup functionality
+    function openCalculatorPopup() {
+      const popup = document.getElementById('calculatorPopup');
+      const iframe = document.getElementById('calculatorFrame');
+      const loading = document.querySelector('.popup-loading');
+      
+      // Show popup
+      popup.classList.add('show');
+      document.body.classList.add('popup-open');
+      
+      // Load calc.html in iframe
+      iframe.src = 'calc.html';
+      
+      // Handle iframe load
+      iframe.onload = function() {
+        loading.style.display = 'none';
+        iframe.style.display = 'block';
+      };
+      
+      // Handle iframe error
+      iframe.onerror = function() {
+        loading.innerHTML = '<div style="text-align: center; color: #e74c3c;"><p>Error loading calculator</p><p style="font-size: 0.9em;">Please make sure calc.html exists in the same directory</p></div>';
+      };
+    }
+
+    function closeCalculatorPopup() {
+      const popup = document.getElementById('calculatorPopup');
+      const iframe = document.getElementById('calculatorFrame');
+      const loading = document.querySelector('.popup-loading');
+      
+      // Hide popup
+      popup.classList.remove('show');
+      document.body.classList.remove('popup-open');
+      
+      // Reset iframe and loading state
+      setTimeout(() => {
+        iframe.src = '';
+        iframe.style.display = 'none';
+        loading.style.display = 'flex';
+        loading.innerHTML = '<div class="spinner"></div>Loading calculator...';
+      }, 300);
+    }
+
+    // Close popup when clicking outside
+    document.getElementById('calculatorPopup').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeCalculatorPopup();
+      }
+    });
+
+    // Close popup with ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && document.getElementById('calculatorPopup').classList.contains('show')) {
+        closeCalculatorPopup();
+      }
+    });
+
+    // Prevent body scrolling when popup is open
+    document.addEventListener('DOMContentLoaded', function() {
+      const popup = document.getElementById('calculatorPopup');
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'class') {
+            if (popup.classList.contains('show')) {
+              document.body.style.overflow = 'hidden';
+            } else {
+              document.body.style.overflow = '';
+            }
+          }
+        });
+      });
+      
+      observer.observe(popup, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    });
   </script>
+
 </body>
 </html>
